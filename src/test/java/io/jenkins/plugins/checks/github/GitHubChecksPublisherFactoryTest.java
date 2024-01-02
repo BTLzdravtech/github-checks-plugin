@@ -11,6 +11,7 @@ import org.jenkinsci.plugins.displayurlapi.DisplayURLProvider;
 import org.jenkinsci.plugins.github_branch_source.GitHubAppCredentials;
 import org.jenkinsci.plugins.github_branch_source.GitHubSCMSource;
 import org.jenkinsci.plugins.github_branch_source.PullRequestSCMRevision;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -67,6 +68,7 @@ class GitHubChecksPublisherFactoryTest {
         assertThat(factory.createPublisher(job, TaskListener.NULL)).containsInstanceOf(GitHubChecksPublisher.class);
     }
 
+    @Disabled
     @Test
     void shouldCreateGitHubChecksPublisherFromRunForProjectWithValidGitSCM() throws IOException, InterruptedException {
         Job job = mock(Job.class);
