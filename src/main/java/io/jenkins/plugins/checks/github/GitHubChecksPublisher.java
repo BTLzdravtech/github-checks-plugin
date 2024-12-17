@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.cloudbees.plugins.credentials.common.StandardUsernameCredentials;
 import org.apache.commons.lang3.StringUtils;
 
 import edu.hm.hafner.util.VisibleForTesting;
@@ -63,7 +62,8 @@ public class GitHubChecksPublisher extends ChecksPublisher {
     @Override
     public void publish(final ChecksDetails details) {
         try {
-            StandardUsernameCredentials credentials = context.getCredentials();
+            final var credentials = context.getCredentials();
+
             // Prevent publication with unsupported credential types
             switch (credentials.getClass().getSimpleName()) {
                 case "GitHubAppCredentials":
@@ -79,7 +79,7 @@ public class GitHubChecksPublisher extends ChecksPublisher {
             }
 
             GitHub gitHub = Connector.connect(StringUtils.defaultIfBlank(apiUri, gitHubUrl),
-                    credentials);
+                credentials);
 
             GitHubChecksDetails gitHubDetails = new GitHubChecksDetails(details);
 
@@ -124,10 +124,15 @@ public class GitHubChecksPublisher extends ChecksPublisher {
     @VisibleForTesting
     GHCheckRunBuilder getCreator(final GitHub gitHub, final GitHubChecksDetails details) throws IOException {
         GHCheckRunBuilder builder = gitHub.getRepository(context.getRepository())
-                .createCheckRun(details.getName(), context.getHeadSha())
-                .withStartedAt(details.getStartedAt().orElse(Date.from(Instant.now())));
+            .createCheckRun(details.getName(), context.getHeadSha())
+            .withStartedAt(details.getStartedAt().orElse(Date.from(Instant.now())));
 
         return applyDetails(builder, details);
+    }
+
+    @VisibleForTesting
+    GitHubChecksContext getContext() {
+        return context;
     }
 
     private GHCheckRunBuilder applyDetails(final GHCheckRunBuilder builder, final GitHubChecksDetails details) {

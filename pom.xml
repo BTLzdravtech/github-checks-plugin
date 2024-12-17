@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>4.76</version>
+    <version>4.88</version>
     <relativePath/>
   </parent>
 
@@ -17,8 +17,8 @@
   <name>GitHub Checks plugin</name>
 
   <properties>
-    <changelist>554.vb_ee03a_000f65-BTL</changelist>
-    <jenkins.version>2.361.4</jenkins.version>
+    <changelist>999999-SNAPSHOT</changelist>
+    <jenkins.version>2.440.3</jenkins.version>
     <useBeta>true</useBeta>
   </properties>
 
@@ -41,10 +41,16 @@
     <dependencies>
       <dependency>
         <groupId>io.jenkins.tools.bom</groupId>
-        <artifactId>bom-2.361.x</artifactId>
-        <version>2102.v854b_fec19c92</version>
+        <artifactId>bom-2.440.x</artifactId>
+        <version>3413.v0d896b_76a_30d</version>
         <scope>import</scope>
         <type>pom</type>
+      </dependency>
+      <dependency>
+        <!-- TODO remove when available in bom-2.440.x -->
+        <groupId>org.jenkins-ci.plugins</groupId>
+        <artifactId>github-branch-source</artifactId>
+        <version>1807.v50351eb_7dd13</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -80,7 +86,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.25.0</version>
+      <version>3.26.3</version>
       <scope>test</scope>
     </dependency>
     <dependency>
